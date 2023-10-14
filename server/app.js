@@ -95,8 +95,6 @@ app.post('/register', function (req, res) {
   });
 });
 
-
-
 app.post('/insert', upload.single('petpic'), function (req, res) {
   const date = req.body.date;
   const name = req.body.name;
