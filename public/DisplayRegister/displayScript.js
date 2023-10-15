@@ -17,8 +17,9 @@ fetch('/display', { method: 'POST' })
                 <p><strong>Address:</strong> ${pet.address}</p>
                 <p><strong>Email:</strong> ${pet.email}</p>
                 <p><strong>No.:</strong> ${pet.mno}</p>
-            `;
 
+            `;
+             /*
             // Create an <img> element for the pet picture
             if (pet.petpic) {
                 const petPic = document.createElement('img');
@@ -26,7 +27,7 @@ fetch('/display', { method: 'POST' })
 
                 // Append the pet picture to the card
                 card.appendChild(petPic);
-            }
+            }*/
 
             petCardContainer.appendChild(card);
         });

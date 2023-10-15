@@ -43,7 +43,7 @@ app.get('/display', (req, res) => {
 });
 
 app.post('/display', (req, res) => {
-  con.query('SELECT * FROM registeredpet', (error, results) => {
+  con.query('SELECT * FROM checking', (error, results) => {
     if (error) {
       // Handle the error (e.g., log it or send an error response to the client)
       console.error('Error executing SQL query:', error);
@@ -134,7 +134,6 @@ app.post('/insert', upload.single('petpic'), function (req, res) {
 
 
 const port = 7000;
-
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

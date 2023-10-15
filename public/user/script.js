@@ -74,4 +74,26 @@ document.addEventListener("DOMContentLoaded", function () {
           console.error('Error occurred:', error);
       }
   }
-});
+}); 
+function setCookie(){
+
+    var username = document.getElementById('Lusername').value;
+    var password = document.getElementById('Lpassword').value;
+
+    // Create a cookie with the login information (this is just a basic example)
+    document.cookie = "username=" + username + ";";
+    document.cookie = "password=" + password + ";";
+}
+
+function getCookie(){
+    
+}
+
+function showPassword(passwordId) {
+    var passwordInput = document.getElementById(passwordId);
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+    } else {
+      passwordInput.type = "password";
+    }
+  }

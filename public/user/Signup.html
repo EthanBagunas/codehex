@@ -11,23 +11,24 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
-<body>
+<body onload="getCookie()">
     <div class="wrapper"> 
         <div class="form-box login">
             <h1>Login</h1>
             <form id="Ulogin" action="/login" method="post">
                 <div class="input-box">
-                    <input type="text" name="username" placeholder=" " required>
+                    <input type="text" id="Lusername" name="username" placeholder=" " required>
                     <label>Username</label>
                     <i class='bx bxs-user'></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" name="password"placeholder=" " required>
+                    <input type="password" placeholder=" " id="Lpassword" name="password" required>
                     <label>Password</label>
+                    <input type="checkbox" onclick="showPassword('Lpassword')"> Show Password
                     <i class='bx bxs-lock-alt'></i>
                 </div>
                 <div class="remember-forgot">
-                    <label><input type="checkbox"> Remember me</label>
+                    <label><input type="checkbox" name="rememberme" id ="rememberme" onclick="setCookie()"> Remember me</label>
                     <a href="#">Forgot password?</a>
                 </div>
                 <button type="submit" class="btn" value="Submit">Login</button>
@@ -51,8 +52,9 @@
                     <i class='bx bxs-envelope'></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" placeholder=" " id="password" name="password" required>
+                    <input type="password" placeholder=" " id="Rpassword" name="password" required>
                     <label>Password</label>
+                    <input type="checkbox" onclick="showPassword('Rpassword')"> Show Password
                     <i class='bx bxs-lock-alt'></i>
                 </div>
                 <div class="input-box">
