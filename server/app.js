@@ -1,21 +1,25 @@
-var con = require('./connection');
 var express  = require('express');
 var app = express();
 const path = require ('path')
 var bodyParser = require('body-parser');
 const cors = require('cors')
 const multer = require('multer');
-
 const storage = multer.memoryStorage(); 
 const upload =multer({ storage:multer.memoryStorage()});
 
 
+/*const users= require('./Users');
+app.use('/users', users);*/
+
+var con = require('./connection');
+
+
 app.use(cors());
+
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true }));
-
-
 
 app.use(express.static(path.join(__dirname, '../public')));
 
@@ -32,27 +36,47 @@ app.get('/homepage', (req, res) => {
 app.get('/surrender', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/surrender/index.html'));
 });
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/user/Signup.html'));
-});
-
 
 
 app.get('/display', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/DisplayRegister/display.html'));
 });
 
-app.post('/display', (req, res) => {
-  con.query('SELECT * FROM checking', (error, results) => {
-    if (error) {
+
+app.post('/search', (req, res) => {
+  const searchData = req.body;
+
+  // Implement your search logic here
+  // For now, just log the received data and send a response
+  console.log('Received Search Data:', searchData);
+  
+  const species = req.body.species;
+  const gender = req.body.gender;
+  const size = req.body.size;
+  const breed = req.body.breed;
+  
+  // Build the SQL query based on the criteria
+  const sql = 'SELECT * FROM checking WHERE species = ? AND gender = ? AND size = ? AND breed = ?';
+  
+  // Execute the query
+  con.query(sql, [species, gender, size, breed], (error, results) => {
+  if (error) {
       // Handle the error (e.g., log it or send an error response to the client)
       console.error('Error executing SQL query:', error);
       res.status(500).json({ error: 'Internal server error' });
     } else {
       // Send the results as a JSON response to the client
+      
       res.json({ pets: results });
     }
   });
+
+});
+
+
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/user/Signup.html'));
 });
 
 app.post('/login', (req, res) => {
@@ -74,17 +98,12 @@ app.post('/login', (req, res) => {
   });
 });
 
-
 app.post('/register', function (req, res) {
   const username = req.body.username;
   const email = req.body.email;
   const plainPassword = req.body.password;
   const account = req.body.account;
 
-  // Hash the password using bcrypt
-  /* bcrypt.hash(plainPassword, saltRounds, function (err, hashedPassword) {
-      
-  });*/
   con.connect(function (error) {
       if (error) throw error;
       const sql = "INSERT INTO users (username, email, password, account) VALUES (?, ?, ?, ?)";
@@ -94,6 +113,10 @@ app.post('/register', function (req, res) {
       });
   });
 });
+
+
+
+
 
 app.post('/insert', upload.single('petpic'), function (req, res) {
   const date = req.body.date;
