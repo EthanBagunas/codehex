@@ -56,7 +56,7 @@ app.post('/search', (req, res) => {
   const breed = req.body.breed;
   
   // Build the SQL query based on the criteria
-  const sql = 'SELECT * FROM checking WHERE species = ? AND gender = ? AND size = ? AND breed = ?';
+  const sql = 'SELECT * FROM pet_db WHERE species = ? AND gender = ? AND size = ? AND breed = ?';
   
   // Execute the query
   con.query(sql, [species, gender, size, breed], (error, results) => {
