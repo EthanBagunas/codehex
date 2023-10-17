@@ -8,7 +8,7 @@ const storage = multer.memoryStorage();
 const upload =multer({ storage:multer.memoryStorage()});
 
 
-/*const users= require('./Users');
+/*const users= require('./users');
 app.use('/users', users);*/
 
 var con = require('./connection');
@@ -42,12 +42,8 @@ app.get('/display', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/DisplayRegister/display.html'));
 });
 
-
-app.post('/search', (req, res) => {
+app.post('/display', (req, res) => {
   const searchData = req.body;
-
-  // Implement your search logic here
-  // For now, just log the received data and send a response
   console.log('Received Search Data:', searchData);
   
   const species = req.body.species;
@@ -55,25 +51,17 @@ app.post('/search', (req, res) => {
   const size = req.body.size;
   const breed = req.body.breed;
   
-  // Build the SQL query based on the criteria
-  const sql = 'SELECT * FROM pet_db WHERE species = ? AND gender = ? AND size = ? AND breed = ?';
-  
-  // Execute the query
-  con.query(sql, [species, gender, size, breed], (error, results) => {
+  const sql = 'SELECT * FROM checking WHERE species = ? AND gender = ? AND size = ? AND breed = ?';
+  con.query(sql, [species, gender, size, breed], (error, result) => {
   if (error) {
-      // Handle the error (e.g., log it or send an error response to the client)
       console.error('Error executing SQL query:', error);
       res.status(500).json({ error: 'Internal server error' });
     } else {
-      // Send the results as a JSON response to the client
-      
-      res.json({ pets: results });
+      res.json({ pet: result});
     }
   });
 
 });
-
-
 
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/user/Signup.html'));
