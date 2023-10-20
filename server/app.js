@@ -19,7 +19,7 @@ app.use(cors());
 
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended:true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, '../public')));
 
@@ -37,6 +37,13 @@ app.get('/surrender', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/surrender/index.html'));
 });
 
+app.get('/team', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/DevInfo/Developer.html'));
+});
+
+app.get('/donate', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/DonationPage/DonationPage.html'));
+});
 
 app.get('/display', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/DisplayRegister/display.html'));
@@ -62,6 +69,7 @@ app.post('/display', (req, res) => {
   });
 
 });
+
 
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/user/Signup.html'));
@@ -94,17 +102,13 @@ app.post('/register', function (req, res) {
 
   con.connect(function (error) {
       if (error) throw error;
-      const sql = "INSERT INTO users (username, email, password, account) VALUES (?, ?, ?, ?)";
+      const sql = "INSERT INTO users(username, email, password, account) VALUES (?, ?, ?, ?)";
       con.query(sql, [username, email, plainPassword, account], function (error, result) {
           if (error) throw error;
           console.log("Registered Successfully");
       });
   });
 });
-
-
-
-
 
 app.post('/insert', upload.single('petpic'), function (req, res) {
   const date = req.body.date;
@@ -128,7 +132,7 @@ app.post('/insert', upload.single('petpic'), function (req, res) {
     }
 
     console.log("Connected!!!")
-    var sql = "INSERT INTO registeredpet(date, name, address, age, species, petname, breed, gender, size, email, mno, petpic) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    var sql = "INSERT INTO checking(date, name, address, age, species, petname, breed, gender, size, email, mno, petpic) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     con.query(sql, [date, name, address, age, species, petname, breed, gender, size, email, mno, petpic], function (err, result) {
       if (err) {
@@ -143,7 +147,6 @@ app.post('/insert', upload.single('petpic'), function (req, res) {
   });
 });
 
-
 const port = 7000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
@@ -152,30 +155,4 @@ app.listen(port, () => {
 
 
 
-/*
-app.post('/login', function (req, res) {
-  const enteredUsername = req.body.username;
-  const enteredPassword = req.body.password;
-  const sql = "SELECT password FROM users WHERE username = ? LIMIT 1";
 
-  con.query(sql, [enteredUsername], function (error, result) {
-      if (error) throw error;
-
-      if (result.length === 1) {
-         
-
-              if (enteredPassword) {
-                  // Passwords match, user is authenticated
-                  // Proceed with login logic, for example, you can redirect the user to a dashboard page
-                  res.send('<script>alert("Login successful! Redirecting to dashboard..."); </script>'); 
-              } else {
-                  // Passwords don't match, show an error or redirect back to login page
-                  res.send('<script>alert("Invalid username or password")');
-              }
-          
-      } else {
-          // User not found, show an error or redirect back to login page
-          res.send('<script>alert("User not found");');
-      }
-  });
-});*/

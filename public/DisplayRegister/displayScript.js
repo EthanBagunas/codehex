@@ -52,8 +52,9 @@ function handleSubmit() {
                     petCardContainer.appendChild(card);
                 
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
         })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        
     }
