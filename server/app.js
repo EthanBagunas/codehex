@@ -64,6 +64,7 @@ app.post('/display', (req, res) => {
       console.error('Error executing SQL query:', error);
       res.status(500).json({ error: 'Internal server error' });
     } else {
+      console.log('Received Data from Database:', result)
       res.json({ pet: result});
     }
   });
