@@ -1,35 +1,34 @@
 const express= require ('express')
-const app =express();
+const user =express();
 const path = require ('path')
 var con = require('./connection');
 
-app.use(express.static(path.join(__dirname, '../public')));
+user.use(express.static(path.join(__dirname, '../public')));
 
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/user/Signup.html'));
+user.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/user/Signup.html'));
+});
+
+user.post('/login', (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  // Perform authentication logic by querying the database
+  con.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (error, results) => {
+    if (error) {
+      return res.send('Database error');
+    }
+
+    // Check if any rows were returned (authentication successful)
+    if (results.length > 0) {
+      res.send('<script>alert("Logging In"); window.location.href = "http://localhost:7000/homepage/";</script>');
+    } else {
+      res.send('Login failed. Please check your credentials.');
+    }
   });
+});
 
-
-app.post('/login', (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-  
-    // Perform authentication logic by querying the database
-    con.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (error, results) => {
-      if (error) {
-        return res.send('Database error');
-      }
-  
-      // Check if any rows were returned (authentication successful)
-      if (results.length > 0) {
-        res.send('<script>alert("Logging In"); window.location.href = "http://localhost:7000/homepage/";</script>');
-      } else {
-        res.send('Login failed. Please check your credentials.');
-      }
-    });
-  });
-
-  app.post('/register', function (req, res) {
+user.post('user/register', function (req, res) {
     const username = req.body.username;
     const email = req.body.email;
     const plainPassword = req.body.password;
@@ -47,7 +46,6 @@ app.post('/login', (req, res) => {
             console.log("Registered Successfully");
         });
     });
-  });
+});
 
-
-  module.exports =app;
+module.exports = user;

@@ -1,6 +1,7 @@
 document.getElementById('searchBtn').addEventListener('click', handleSubmit);
 
-function handleSubmit() {
+async function handleSubmit(event) {
+    event.preventDefault();
     var species = document.getElementById('species').value;
             var gender = document.getElementById('gender').value;
             var size = document.getElementById('size').value;
@@ -26,6 +27,23 @@ function handleSubmit() {
                 data.pet.forEach(pet => {
                     const card = document.createElement('div');
                     card.classList.add('card'); // Add the 'card' class for styling
+                    
+                    if (pet.petpic) {
+                        const blobURL = URL.createObjectURL(pet.petpic);
+
+                        // Create an image element
+                        const img = new Image();
+
+                        // Set the source of the image to the blob URL
+                        img.src = blobURL;
+
+                        // Add the image to the DOM or perform other actions as needed
+                        card.appendChild(img);
+
+                        // Don't forget to revoke the object URL when you're done to prevent memory leaks
+                        URL.revokeObjectURL(blobURL);   
+                    }
+                    /*
                     card.innerHTML = `
                         <h2>${pet.petname}</h2>
                         <p><strong>Date:</strong> ${pet.date}</p>
@@ -37,17 +55,19 @@ function handleSubmit() {
                         <p><strong>Age:</strong> ${pet.age}</p>
                         <p><strong>Address:</strong> ${pet.address}</p>
                         <p><strong>Email:</strong> ${pet.email}</p>
-                        <p><strong>No.:</strong> ${pet.mno}</p>
+                        <p><strong>No.:</strong> ${img.src}</p>
                     `;
-                    /*
-                    // Create an <img> element for the pet picture
+                    
+                   /*
+                       // Create an <img> element for the pet picture
                     if (pet.petpic) {
                         const petPic = document.createElement('img');
                         petPic.src = `data:image/png;base64, ${pet.petpic.toString('base64')}`; // Use "image/jpeg" for JPG images
     
-                        // Append the pet picture to the card
-                        card.appendChild(petPic);
+                        // Append the pet picture to the car
                     }*/
+                    
+                    
     
                     petCardContainer.appendChild(card);
                 
