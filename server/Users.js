@@ -1,15 +1,7 @@
-const express= require ('express')
-const user =express();
-const path = require ('path')
-var con = require('./connection');
+var express  = require('express');
+var router = express.Router();
 
-user.use(express.static(path.join(__dirname, '../public')));
-
-user.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/user/Signup.html'));
-});
-
-user.post('/login', (req, res) => {
+router.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
@@ -28,24 +20,21 @@ user.post('/login', (req, res) => {
   });
 });
 
-user.post('user/register', function (req, res) {
-    const username = req.body.username;
-    const email = req.body.email;
-    const plainPassword = req.body.password;
-    const account = req.body.account;
-  
-    // Hash the password using bcrypt
-    /* bcrypt.hash(plainPassword, saltRounds, function (err, hashedPassword) {
-        
-    });*/
-    con.connect(function (error) {
-        if (error) throw error;
-        const sql = "INSERT INTO users (username, email, password, account) VALUES (?, ?, ?, ?)";
-        con.query(sql, [username, email, plainPassword, account], function (error, result) {
-            if (error) throw error;
-            console.log("Registered Successfully");
-        });
-    });
+router.post('/register', function (req, res) {
+  const username = req.body.username;
+  const email = req.body.email;
+  const plainPassword = req.body.password;
+  const account = req.body.account;
+
+  con.connect(function (error) {
+      if (error) throw error;
+      const sql = "INSERT INTO users(username, email, password, account) VALUES (?, ?, ?, ?)";
+      con.query(sql, [username, email, plainPassword, account], function (error, result) {
+          if (error) throw error;
+          console.log("Registered Successfully");
+      });
+  });
 });
 
-module.exports = user;
+module.exports = router;
+

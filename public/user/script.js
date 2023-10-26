@@ -85,10 +85,6 @@ function setCookie(){
     document.cookie = "password=" + password + ";";
 }
 
-function getCookie(){
-    
-}
-
 function showPassword(passwordId) {
     var passwordInput = document.getElementById(passwordId);
     if (passwordInput.type === "password") {
