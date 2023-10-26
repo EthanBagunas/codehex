@@ -4,14 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="/DisplayRegister/display.css">
-     
+    <link rel="stylesheet" href="DisplayRegister/display.css">
 </head>
 <body>
-    <h1>Registered Pets</h1>
+    <h1>Animal Search</h1>
+    <form id="form">
+        <label for="species">Species:</label>
+        <select id="species">
+            <option value="dog">dog</option>
+            <option value="cat">cat</option>
+            <!-- Add more species options as needed -->
+        </select>
+
+        <label for="gender">Gender:</label>
+        <select id="gender">
+            <option value="male">male</option>
+            <option value="female">female</option>
+            <!-- Add more gender options as needed -->
+        </select>
+
+        <label for="size">Size:</label>
+        <select id="size">
+            <option value="small">small</option>
+            <option value="medium">medium</option>
+            <option value="large">large</option>
+            <!-- Add more size options as needed -->
+        </select>
+
+        <label for="breed">Breed:</label>
+        <input type="text" id="breed" placeholder="Enter breed">
+
+        <button id="searchBtn">Search</button>
+    </form>
+
+
+    <h2>Registered Pets</h2>
     <div id="petCardContainer"> <!-- Use a div to contain the cards -->
     </div>
 
-    <script src="/DisplayRegister/displayScript.js"></script>
+    
 </body>
+<script src="DisplayRegister/displayScript.js"></script>
 </html>
